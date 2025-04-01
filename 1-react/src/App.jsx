@@ -6,7 +6,7 @@ const App = () => {
   return (
     // <ProductPage />
     // <OrderPage />
-    <CartPage />
+    <CartPage productId={"CACDA423"} />
   )
 
 
