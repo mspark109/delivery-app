@@ -1,4 +1,3 @@
-import Card from "../../components/Card";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
 import OrderApi from 'shared/api/OrderApi';
