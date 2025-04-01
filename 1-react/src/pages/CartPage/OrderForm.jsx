@@ -26,13 +26,13 @@ class OrderForm extends React.Component {
     const paymentMethod = this.getInputValueByName('paymentMethod');
     const messageToShop = this.getInputValueByName('messageToShop');
     const messageToRider = this.getInputValueByName('messageToRider');
-    console.log("submit", {
+    this.props.onSubmit({
       deliveryAddress,
       deliveryContact,
       paymentMethod,
       messageToShop,
       messageToRider
-    })
+    });
   }
 
   render() {

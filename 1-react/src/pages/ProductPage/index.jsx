@@ -1,30 +1,48 @@
-import ProductItem from "../../components/ProductItem";
 import Navbar from "../../components/Navbar";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
+import ProductApi from "shared/api/ProductApi";
+import React from "react";
+import OrderableProductItem from "./OrderableProductItem";
 
 
-const ProductPage = () => {
+class ProductPage extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = { productList: [],
+    };
+  }
 
-  const fakeProduct = {
-    "id": "CACDA421",
-    "name": "해물 계란 라면",
-    "price": 6000,
-    "thumbnail": "./images/menu-해물계란라면.jpg"
+  async fetch() {
+    try{
+      const productList = await ProductApi.fetchProductList();
+      this.setState({ productList });
+    }catch(e){
+      console.error(e);
+    }
+  }
+
+  componentDidMount() {
+    this.fetch();
   }
 
 
-  return (
-    <div className="ProductPage">
-      <Page header={<Title>메뉴목록</Title>} footer={<Navbar />}>
-        <ul>
-          <li>
-            <ProductItem product={fakeProduct}/>
-          </li>
-        </ul>
-      </Page>
-    </div>
-  )
+  render() {
+    return (
+      <div className="ProductPage">
+        <Page header={<Title>메뉴목록</Title>} footer={<Navbar />}>
+          <ul>
+              {this.state.productList.map(product => (
+                <li key={product.id}>
+                  <OrderableProductItem product={product} />
+                </li>
+              ))}
+          </ul>
+        </Page>
+      </div>
+    )
+  }
 }
 
 export default ProductPage;

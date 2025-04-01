@@ -4,9 +4,9 @@ import CartPage from "./pages/CartPage";
 
 const App = () => {
   return (
-    // <ProductPage />
+    <ProductPage />
     // <OrderPage />
-    <CartPage productId={"CACDA423"} />
+    // <CartPage productId={"CACDA423"} />
   )
 
 
