@@ -15,6 +15,7 @@ export const Link =({to, ...rest}) => (
   </routerContext.Consumer>
 )
 
+// 요청 경로를 상태로관리
 export class Router extends React.Component {
   constructor(props){
     super(props);
@@ -22,10 +23,27 @@ export class Router extends React.Component {
       path: window.location.pathname
     };
     this.handleChangePath = this.handleChangePath.bind(this);
+    this.handleOnpopstate = this.handleOnpopstate.bind(this);
   }
 
   handleChangePath(path) {
     this.setState({ path })
+    window.history.pushState({ path }, "", path);
+  }
+
+  handleOnpopstate(event) {
+    const nextPath = event.state && event.state.path;
+    if(!nextPath) return;
+    this.setState({path:nextPath});
+  }
+
+  componentDidMount() {
+    window.addEventListener("popstate", this.handleOnpopstate);
+    window.history.replaceState({ path: this.state.path }, ""); // 최초 로딩시 상태를 history에 추가
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("popstate", this.handleOnpopstate);
   }
 
   render() {
@@ -42,6 +60,7 @@ export class Router extends React.Component {
   }
 }
 
+// 요청 경로에 따라 적절한 컴포넌트를 찾는 역할
 export const Routes = ({children}) => (
   <routerContext.Consumer>
       {({path})=> {
