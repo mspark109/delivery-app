@@ -1,16 +1,12 @@
 import ProductItem from "../../components/ProductItem";
 import * as  MyRouter from "../../lib/MyRouter";
 
-const OrderableProductItem = ({product}) => (
-  <MyRouter.routerContext.Consumer>
-    {({changePath}) => {
-      const handleClick = () => {
-        changePath('/cart/'+product.id);
-      }
-  
-      return <ProductItem product={product} onClick={handleClick} />;
-    }}
-  </MyRouter.routerContext.Consumer>
-)
+const OrderableProductItem = ({product, navigate}) => {
+  const handleClick = () => {
+    navigate('/cart?productId='+product.id);
+  }
 
-export default OrderableProductItem;
+  return <ProductItem product={product} onClick={handleClick} />;
+}
+
+export default MyRouter.WithRouter(OrderableProductItem);
