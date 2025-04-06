@@ -1,12 +1,14 @@
-const Page = ({header, footer, children}) => {
+import * as MyLayout from "../lib/MyLayout";
+import { BackDrop } from "./Backdrop";
 
-  return (
+const Page = ({header, footer, children}) =>  (
     <div className="Page">
       <header>{header}</header>
       <main>{children}</main>
       <footer>{footer}</footer>
+      <MyLayout.DialogContainer />
     </div>
-  )
-}
+)
+
 
 export default Page;

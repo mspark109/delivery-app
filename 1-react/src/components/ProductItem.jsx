@@ -1,4 +1,6 @@
+import { BackDrop } from "./Backdrop";
 import Button from "./Button";
+import { Dialog } from "./Dialog";
 
 const ProductItem = ({product, onClick}) => {
 
@@ -6,6 +8,7 @@ const ProductItem = ({product, onClick}) => {
   
 
   return (
+    <>
       <div className="ProductItem">
         <div className="description">
           <h2>{name}</h2>
@@ -16,6 +19,7 @@ const ProductItem = ({product, onClick}) => {
           <img src={thumbnail} alt={`${name} ${price.toLocaleString()}원`} />
         </div>
       </div>
+    </>
   )
 }
 

@@ -6,6 +6,7 @@ import OrderStatusCard from "./OrderStatusCard";
 import OrderPaymentCard from "./OrderPaymentCard";
 import OrderDeliveryCard from "./OrderDeliveryCard";
 import React from "react";
+import * as MyLayout from "../../lib/MyLayout";
 class OrderPage extends React.Component {
   constructor(props) {
     super(props);
@@ -13,9 +14,11 @@ class OrderPage extends React.Component {
   }
 
   async fetch() {
+    this.props.startLoading("주문 정보 로딩중...");
     try{
       const order = await OrderApi.fetchMyOrder();
       this.setState({order});
+      this.props.finishLoading();
     }catch(e) {
       console.error(e);
     }
@@ -64,4 +67,4 @@ class OrderPage extends React.Component {
   };
 
 
-export default OrderPage;
+export default MyLayout.withLayout(OrderPage);
