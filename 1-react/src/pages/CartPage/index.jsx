@@ -9,6 +9,7 @@ import ProductApi from "shared/api/ProductApi";
 import * as MyRouter from "../../lib/MyRouter";
 import * as MyLayout from "../../lib/MyLayout";
 import ErrorDialog from "../../components/ErrorDialog";
+import PaymentSuccessDialog from "./PaymentSuccessDialog";
 
 class CartPage extends React.Component {
 
@@ -39,11 +40,19 @@ class CartPage extends React.Component {
     this.fetch();
   }
 
-  handleSubmit(values) {
-    console.log(values);
+  async handleSubmit(values) {
+    const { startLoading, finishLoading, openDialog } = this.props;
+    startLoading("결제중...");
 
-    //TODO: 결제 성공 후 
-    this.props.navigate('/order')
+    try{
+      await OrderApi.createOrder(values);
+    }catch(e){
+      openDialog(<ErrorDialog />);
+      return;
+    }
+    finishLoading();
+    openDialog(<PaymentSuccessDialog />);
+
   }
 
 
