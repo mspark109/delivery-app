@@ -7,6 +7,7 @@ import OrderableProductItem from "./OrderableProductItem";
 import { BackDrop } from "../../components/Backdrop";
 import { Dialog } from "../../components/Dialog";
 import * as MyLayout from "../../lib/MyLayout";
+import ErrorDialog from "../../components/ErrorDialog";
 
 
 class ProductPage extends React.Component {
@@ -18,14 +19,17 @@ class ProductPage extends React.Component {
   }
 
   async fetch() {
-    this.props.openDialog(<Dialog>메뉴 로딩중..</Dialog>);
+    const { startLoading, finishLoading, openDialog } = this.props;
+
+    startLoading("메뉴 로딩중..");
     try{
       const productList = await ProductApi.fetchProductList();
       this.setState({ productList });
-      this.props.closeDialog();
     }catch(e){
-      console.error(e);
+      openDialog(<ErrorDialog />);
+      return;
     }
+    finishLoading();
   }
 
   componentDidMount() {

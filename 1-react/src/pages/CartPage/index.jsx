@@ -8,6 +8,7 @@ import React from "react";
 import ProductApi from "shared/api/ProductApi";
 import * as MyRouter from "../../lib/MyRouter";
 import * as MyLayout from "../../lib/MyLayout";
+import ErrorDialog from "../../components/ErrorDialog";
 
 class CartPage extends React.Component {
 
@@ -18,17 +19,20 @@ class CartPage extends React.Component {
   }
 
   async fetch() {
-    this.props.startLoading("장바구니에 담는중..");
+    const { startLoading, finishLoading, openDialog } = this.props;
+
+    startLoading("장바구니에 담는중..");
     const {productId} = this.props.params();
     if (!productId) return;
     
     try {  
       const product = await ProductApi.fetchProduct(productId);
       this.setState({product});
-      this.props.finishLoading();
     }catch(e) {
-      console.error(e);
+      openDialog(<ErrorDialog />);
+      return;
     }
+    finishLoading();
   }
 
   componentDidMount() {

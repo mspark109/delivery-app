@@ -7,6 +7,7 @@ import OrderPaymentCard from "./OrderPaymentCard";
 import OrderDeliveryCard from "./OrderDeliveryCard";
 import React from "react";
 import * as MyLayout from "../../lib/MyLayout";
+import ErrorDialog from "../../components/ErrorDialog";
 class OrderPage extends React.Component {
   constructor(props) {
     super(props);
@@ -14,14 +15,18 @@ class OrderPage extends React.Component {
   }
 
   async fetch() {
-    this.props.startLoading("주문 정보 로딩중...");
+    const {startLoading, finishLoading, openDialog} = this.props;
+
+    startLoading("주문 정보 로딩중...");
     try{
       const order = await OrderApi.fetchMyOrder();
       this.setState({order});
-      this.props.finishLoading();
+      
     }catch(e) {
-      console.error(e);
+      openDialog(<ErrorDialog />);
+      return;
     }
+    finishLoading();
   }
 
   componentDidMount() {

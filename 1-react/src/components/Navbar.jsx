@@ -11,3 +11,4 @@ const Navbar = ({match}) => {
 }
 
 export default MyRouter.WithRouter(Navbar);
+
