@@ -59,7 +59,7 @@ class CartPage extends React.Component {
   render() {
     return(
       <div className="CartPage">
-        <Page header={<Title>장바구니</Title>} footer={<PaymentButton/>}>
+        <Page header={<><MyRouter.Link to="/" /><Title>장바구니</Title></>} footer={<PaymentButton/>}>
           {this.state.product && <ProductItem product={this.state.product} />}
           <OrderForm onSubmit={this.handleSubmit}/>
         </Page>
